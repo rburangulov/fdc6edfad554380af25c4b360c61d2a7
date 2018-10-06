@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pg-slave
+  labels:
+    app: postgres-slave
+spec:
+  type: NodePort
+  ports:
+   - name: pg
+     port: 5432
+  selector:
+   app: postgres-slave

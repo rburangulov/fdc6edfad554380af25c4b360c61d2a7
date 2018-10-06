@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-slave
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-slave
+    spec:
+      containers:
+        - name: postgres-slave
+          image: postgres:10.4
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgres-slave-config
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-slave-volume
+      volumes:
+        - name: postgres-slave-volume
+          persistentVolumeClaim:
+            claimName: postgres-slave-claim
