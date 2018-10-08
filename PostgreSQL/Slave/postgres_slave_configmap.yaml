@@ -8,3 +8,21 @@ data:
   POSTGRES_DB: postgresdb
   POSTGRES_USER: postgresadmin
   POSTGRES_PASSWORD: postgrespassword
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-slave-initdb
+data:
+  initdb.sql: |
+    ALTER SYSTEM SET wal_level = 'logical';
+
+    CREATE TABLE city (
+        id integer NOT NULL,
+        name text NOT NULL,
+        countrycode character(3) NOT NULL,
+        district text NOT NULL,
+        population integer NOT NULL
+    );
+
+    CREATE SUBSCRIPTION mysub CONNECTION 'dbname=postgresdb host=pg-master user=postgresadmin password=postgrespassword port=5432' PUBLICATION mypub;

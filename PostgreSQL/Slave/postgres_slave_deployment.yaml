@@ -15,13 +15,19 @@ spec:
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 5432
+            - containerPort: 5555
           envFrom:
             - configMapRef:
                 name: postgres-slave-config
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-slave-volume
+            - mountPath: /docker-entrypoint-initdb.d
+              name: init-db
       volumes:
         - name: postgres-slave-volume
           persistentVolumeClaim:
             claimName: postgres-slave-claim
+        - name: init-db
+          configMap:
+            name: postgres-slave-initdb
