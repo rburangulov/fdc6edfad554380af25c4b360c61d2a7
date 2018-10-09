@@ -9,6 +9,8 @@ spec:
       labels:
         app: postgres-master
     spec:
+      nodeSelector:
+        app: postgres-master
       containers:
         - name: postgres-master
           image: postgres:10.4

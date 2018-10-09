@@ -9,6 +9,8 @@ spec:
       labels:
         app: postgres-slave
     spec:
+      nodeSelector:
+        app: postgres-slave
       containers:
         - name: postgres-slave
           image: postgres:10.4
