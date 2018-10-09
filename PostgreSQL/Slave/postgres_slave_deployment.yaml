@@ -9,6 +9,7 @@ spec:
       labels:
         app: postgres-slave
     spec:
+      hostNetwork: true
       nodeSelector:
         app: postgres-slave
       containers:
@@ -16,7 +17,9 @@ spec:
           image: postgres:10.4
           imagePullPolicy: "IfNotPresent"
           ports:
-            - containerPort: 5432
+            - name: pg
+              containerPort: 5432
+              hostPort: 5432
           envFrom:
             - configMapRef:
                 name: postgres-slave-config
