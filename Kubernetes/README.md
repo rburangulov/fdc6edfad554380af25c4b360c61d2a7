@@ -1,4 +1,4 @@
-Примерный формат файла hosts
+hosts file example
 
 [master]  
 89.108.103.46 ansible_user='root'  
